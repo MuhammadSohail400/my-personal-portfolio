@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #f8f9ff;
+    --on-background: #0b1c30;
+    --surface: #f8f9ff;
+    --surface-dim: #cbdbf5;
+    --surface-bright: #f8f9ff;
+    --surface-container-lowest: #ffffff;
+    --surface-container-low: #eff4ff;
+    --surface-container: #e5eeff;
+    --surface-container-high: #dce9ff;
+    --surface-container-highest: #d3e4fe;
+    --on-surface: #0b1c30;
+    --on-surface-variant: #424656;
+    --inverse-surface: #213145;
+    --inverse-on-surface: #eaf1ff;
+    --outline: #727687;
+    --outline-variant: #c2c6d8;
+
+    /* Default: Blue */
+    --primary: #0050cb;
+    --on-primary: #ffffff;
+    --primary-container: #0066ff;
+    --on-primary-container: #f8f7ff;
+    --primary-fixed-dim: #b3c5ff;
+
+    --secondary: #6b38d4;
+    --on-secondary: #ffffff;
+    --secondary-container: #8455ef;
+    --secondary-fixed-dim: #d0bcff;
+
+    --tertiary: #a33200;
+    --on-tertiary: #ffffff;
+    --tertiary-container: #cc4204;
+    --tertiary-fixed-dim: #ffb59d;
+
+    --error: #ba1a1a;
+    --error-container: #ffdad6;
+    --on-error-container: #93000a;
+  }
+
+  /* ── Theme: Purple ── */
+  [data-theme="purple"] {
+    --primary: #7c3aed;
+    --primary-container: #8b5cf6;
+    --on-primary-container: #f5f3ff;
+    --primary-fixed-dim: #ddd6fe;
+  }
+
+  /* ── Theme: Orange ── */
+  [data-theme="orange"] {
+    --primary: #c2410c;
+    --primary-container: #ea580c;
+    --on-primary-container: #fff7ed;
+    --primary-fixed-dim: #fed7aa;
+  }
+
+  /* ── Theme: Green ── */
+  [data-theme="green"] {
+    --primary: #15803d;
+    --primary-container: #16a34a;
+    --on-primary-container: #f0fdf4;
+    --primary-fixed-dim: #bbf7d0;
+  }
+
+  /* ── Theme: Red ── */
+  [data-theme="red"] {
+    --primary: #b91c1c;
+    --primary-container: #dc2626;
+    --on-primary-container: #fef2f2;
+    --primary-fixed-dim: #fecaca;
+  }
+
+  /* ── Theme: Teal ── */
+  [data-theme="teal"] {
+    --primary: #0f766e;
+    --primary-container: #0d9488;
+    --on-primary-container: #f0fdfa;
+    --primary-fixed-dim: #99f6e4;
+  }
+
+  /* ── Theme: Indigo ── */
+  [data-theme="indigo"] {
+    --primary: #4338ca;
+    --primary-container: #4f46e5;
+    --on-primary-container: #eef2ff;
+    --primary-fixed-dim: #c7d2fe;
+  }
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-on-background: var(--on-background);
+  --color-surface: var(--surface);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-bright: var(--surface-bright);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-primary-fixed-dim: var(--primary-fixed-dim);
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-secondary-fixed-dim: var(--secondary-fixed-dim);
+  --color-tertiary: var(--tertiary);
+  --color-on-tertiary: var(--on-tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-tertiary-fixed-dim: var(--tertiary-fixed-dim);
+  --color-error: var(--error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+
+  --font-sora: var(--font-sora), sans-serif;
+  --font-inter: var(--font-inter), sans-serif;
+  --font-mono: var(--font-mono), monospace;
+
+  --spacing-margin-desktop: 48px;
+  --spacing-margin-mobile: 20px;
+  --spacing-gutter: 20px;
+  --spacing-max-width: 1200px;
+}
+
+/* ── Smooth theme transitions ── */
+html.theme-switching,
+html.theme-switching * {
+  transition:
+    color 0.22s ease,
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease !important;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--on-surface);
+  font-family: var(--font-inter), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sora), sans-serif;
+}
+
+/* ── Geometric grid — uses primary color token ── */
+.geometric-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--primary) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--primary) 6%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+@keyframes bounceSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-bounce-subtle {
+  animation: bounceSubtle 3s infinite ease-in-out;
+}
+
+@keyframes pulseSoft {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 30%, transparent); }
+  50% { transform: scale(1.02); box-shadow: 0 0 0 10px transparent; }
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 3s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(194, 198, 216, 0.4);
+}
+
+.code-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.code-container::-webkit-scrollbar-thumb {
+  background: #424656;
+  border-radius: 10px;
+}
+
+.contribution-grid {
+  display: grid;
+  grid-template-columns: repeat(52, 1fr);
+  gap: 3px;
+}
+
+.contribution-square {
+  aspect-ratio: 1/1;
+  border-radius: 2px;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "portfolio-backend",
+  "version": "1.0.0",
+  "description": "Express.js and MongoDB backend for Portfolio Website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.10.1",
+    "nodemailer": "^6.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
