@@ -8,12 +8,25 @@ const sendEmail = async ({ name, email, subject, message }) => {
   }
 
   const transporter = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE || 'gmail',
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
   });
+
+  try {
+    await transporter.verify();
+    console.log("✅ SMTP Connected");
+  } catch (err) {
+    console.error("❌ SMTP Verify Error:", err);
+    throw err;
+  }
 
   const mailOptions = {
     from: `"${name}" <${process.env.EMAIL_USER}>`,
