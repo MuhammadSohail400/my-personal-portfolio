@@ -38,7 +38,9 @@ export function ContactSection() {
 
     setStatus("loading");
     setResponseMessage("");
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    const API_BASE_URL = (
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+    ).replace(/\/$/, "");
     console.log("API URL:", API_BASE_URL);
     try {
       const response = await fetch(`${API_BASE_URL}/api/contact`, {
