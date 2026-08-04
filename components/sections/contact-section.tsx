@@ -39,7 +39,7 @@ export function ContactSection() {
     setStatus("loading");
     setResponseMessage("");
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
+    console.log("API URL:", API_BASE_URL);
     try {
       const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
@@ -225,9 +225,9 @@ export function ContactSection() {
               </h4>
               <div className="space-y-1">
                 {[
-                  { href: PERSONAL_INFO.githubUrl,   icon: <Github    className="w-4 h-4" />, label: "GitHub"       },
-                  { href: PERSONAL_INFO.linkedinUrl,  icon: <Linkedin  className="w-4 h-4" />, label: "LinkedIn"     },
-                  { href: PERSONAL_INFO.twitterUrl,   icon: <Twitter   className="w-4 h-4" />, label: "Twitter"      },
+                  { href: PERSONAL_INFO.githubUrl, icon: <Github className="w-4 h-4" />, label: "GitHub" },
+                  { href: PERSONAL_INFO.linkedinUrl, icon: <Linkedin className="w-4 h-4" />, label: "LinkedIn" },
+                  { href: PERSONAL_INFO.twitterUrl, icon: <Twitter className="w-4 h-4" />, label: "Twitter" },
                   { href: `mailto:${PERSONAL_INFO.email}`, icon: <Mail className="w-4 h-4" />, label: "Direct Email" },
                 ].map((item) => (
                   <a
