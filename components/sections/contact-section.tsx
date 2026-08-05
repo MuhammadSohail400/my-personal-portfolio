@@ -41,7 +41,7 @@ export function ContactSection() {
     const API_BASE_URL = (
       process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
     ).replace(/\/$/, "");
-    console.log("API URL:", API_BASE_URL);
+
     try {
       const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
@@ -54,7 +54,14 @@ export function ContactSection() {
         }),
       });
 
-      const data = await response.json();
+      // Try to parse JSON, but don't blow up if the server sent something else
+      // (e.g. an HTML error page from a 502/504, or a CORS-blocked opaque response)
+      let data: { success?: boolean; message?: string } = {};
+      try {
+        data = await response.json();
+      } catch {
+        // response wasn't valid JSON — treat as failure below
+      }
 
       if (response.ok && data.success) {
         setStatus("success");
@@ -63,15 +70,18 @@ export function ContactSection() {
         setTimeout(() => { setStatus("idle"); setResponseMessage(""); }, 5000);
       } else {
         setStatus("error");
-        setResponseMessage(data.message || "An error occurred. Please try again.");
+        setResponseMessage(
+          data.message || `Something went wrong (status ${response.status}). Please try again or email me directly.`
+        );
       }
-    } catch {
-      setTimeout(() => {
-        setStatus("success");
-        setResponseMessage("Thank you! Your message has been received.");
-        setFormData({ fullName: "", email: "", subject: "", message: "" });
-        setTimeout(() => { setStatus("idle"); setResponseMessage(""); }, 5000);
-      }, 800);
+    } catch (err) {
+      // This runs on network failures, CORS errors, DNS issues, backend down, etc.
+      // Previously this silently showed "success" which hid real delivery failures.
+      console.error("Contact form submission failed:", err);
+      setStatus("error");
+      setResponseMessage(
+        "Couldn't reach the server. Please check your connection or email me directly."
+      );
     }
   };
 
