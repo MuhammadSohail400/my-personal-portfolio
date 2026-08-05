@@ -1,42 +1,29 @@
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-// Verify connection once when this module loads (helpful for debugging)
-transporter.verify((error) => {
-  if (error) {
-    console.error('❌ [Nodemailer] SMTP connection failed:', error);
-  } else {
-    console.log('✅ [Nodemailer] SMTP server ready to send emails');
-  }
-});
+const { Resend } = require('resend');
 
 const sendEmail = async ({ name, email, subject, message }) => {
-  const gmailUser = process.env.EMAIL_USER;
-  const toAddress = process.env.EMAIL_RECEIVER || gmailUser;
+  const apiKey = process.env.RESEND_API_KEY;
+  // Use Resend's default verified domain — works without custom domain verification
+  const fromAddress = process.env.RESEND_FROM || 'onboarding@resend.dev';
+  // Must be the email you signed up to Resend with, unless you've verified a custom domain
+  const toAddress = process.env.RESEND_TO || process.env.EMAIL_RECEIVER || process.env.EMAIL_USER;
 
-  if (!gmailUser || !process.env.EMAIL_PASS) {
-    console.error('[Nodemailer] Missing GMAIL_USER or GMAIL_APP_PASSWORD in .env');
-    throw new Error('Missing Gmail SMTP credentials');
+  if (!apiKey) {
+    console.error('[Resend] Missing RESEND_API_KEY');
+    throw new Error('Missing RESEND_API_KEY');
   }
 
   if (!toAddress) {
-    console.error('[Nodemailer] Missing recipient address. Set EMAIL_RECEIVER or GMAIL_USER.');
+    console.error('[Resend] Missing recipient address. Set RESEND_TO or EMAIL_RECEIVER/EMAIL_USER.');
     throw new Error('Missing recipient address');
   }
 
+  const resend = new Resend(apiKey);
+
   try {
-    const info = await transporter.sendMail({
-      // Gmail SMTP requires "from" to be your own authenticated Gmail address
-      from: `"Portfolio Contact" <${gmailUser}>`,
-      to: toAddress,
-      replyTo: email, // lets you hit "Reply" and go straight to the sender
+    const response = await resend.emails.send({
+      from: `Portfolio Contact <${fromAddress}>`,
+      to: [toAddress],
+      reply_to: email,
       subject: `Portfolio Contact: ${subject || 'New Message'}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
@@ -54,10 +41,20 @@ const sendEmail = async ({ name, email, subject, message }) => {
       `,
     });
 
-    console.log('✅ [Nodemailer] Email sent:', info.messageId);
-    return info;
+    if (response.error) {
+      console.error('[Resend] API returned error:', JSON.stringify(response.error, null, 2));
+      throw new Error(response.error.message || 'Resend API error');
+    }
+
+    console.log('[Resend] Email sent successfully:', response.data?.id);
+    return response;
   } catch (error) {
-    console.error('[Nodemailer] Send failed:', error);
+    console.error('[Resend] Send failed:', error);
+
+    if (error?.response?.data) {
+      console.error('[Resend] API error payload:', JSON.stringify(error.response.data, null, 2));
+    }
+
     throw error;
   }
 };
