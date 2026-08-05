@@ -78,7 +78,7 @@ export const FEATURED_PROJECTS: Project[] = [
     slug: "shopsmart-ai",
     title: "ShopSmart AI",
     shortDescription: "Enterprise backend architecture featuring JWT role-based authentication, product & inventory management, and structured REST APIs.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDhFdlOjG97dRRaoKbHniDCu834wudeUOhvKxP7yw9COUWNbxpWABNr9i2ME5kD209-0aHDMxxWmOr0NtGEpg3IEJ6rGrsimBPj6aRE8NUPAsFLhjikFdBoKlCw5KPgVmwRFoK56EHnkXgaG_3qBHphLYZ3GCyHIcOJOP3GemGZ9ldm6IyfHVQ31S9AxN-JNcyKiZ0cmfm0g8uNcd2bHp6zIqWPtzvsR8uGton4dai6YNAfPvRuW8Ewag",
+    image: "/shopmart.png",
     imageAlt: "ShopSmart AI Backend Architecture",
     tags: ["NODE.JS", "TYPESCRIPT", "POSTGRESQL", "PRISMA", "REDIS"],
     githubUrl: "https://github.com/MuhammadSohail400",
