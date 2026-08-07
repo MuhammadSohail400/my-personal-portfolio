@@ -6,10 +6,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Container } from "@/components/layout/container";
 import { SectionHeader } from "@/components/common/section-header";
-import { FEATURED_PROJECTS } from "@/lib/data/portfolio-data";
+import type { Project } from "@/types/portfolio";
 import { Code2, Rocket, FileText } from "lucide-react";
 
-export function ProjectsSection() {
+export function ProjectsSection({ projects: FEATURED_PROJECTS }: { projects: Project[] }) {
   return (
     <section id="projects" className="py-20 bg-surface">
       <Container>

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/layout/container";
 import { SectionHeader } from "@/components/common/section-header";
 import { Card } from "@/components/ui/card";
-import { SKILL_CATEGORIES } from "@/lib/data/portfolio-data";
+import type { SkillCategory } from "@/types/portfolio";
 import { Terminal, Database, HardDrive, Cloud, Layers, Wrench, Code2 } from "lucide-react";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -17,7 +17,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   construction: <Wrench    className="w-5 h-5" />,
 };
 
-export function SkillsSection() {
+export function SkillsSection({ skills: SKILL_CATEGORIES }: { skills: SkillCategory[] }) {
   return (
     <section id="skills" className="py-20 bg-background">
       <Container>

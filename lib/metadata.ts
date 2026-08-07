@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import { PERSONAL_INFO } from '@/lib/data/portfolio-data';
+import { PERSONAL_INFO as STATIC_PERSONAL_INFO } from '@/lib/data/portfolio-data';
+import type { PersonalInfo } from '@/lib/data/fetch-portfolio';
 
 export const siteConfig = {
   name: "Muhammad Sohail | Backend & Full-Stack Developer",
@@ -15,17 +16,19 @@ export function constructMetadata({
   image = siteConfig.ogImage,
   canonicalUrl = siteConfig.url,
   noIndex = false,
+  personalInfo = STATIC_PERSONAL_INFO,
 }: {
   title?: string;
   description?: string;
   image?: string;
   canonicalUrl?: string;
   noIndex?: boolean;
+  personalInfo?: PersonalInfo;
 } = {}): Metadata {
   return {
     title,
     description,
-    authors: [{ name: PERSONAL_INFO.name }],
+    authors: [{ name: personalInfo.name }],
     keywords: [
       "Muhammad Sohail",
       "Backend Developer",
@@ -80,11 +83,11 @@ export function constructMetadata({
   };
 }
 
-export function getPersonJsonLd() {
+export function getPersonJsonLd(personalInfo: PersonalInfo = STATIC_PERSONAL_INFO) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: PERSONAL_INFO.name,
+    name: personalInfo.name,
     jobTitle: 'Backend & Full-Stack Developer',
     url: siteConfig.url,
     address: {
@@ -93,8 +96,8 @@ export function getPersonJsonLd() {
       addressCountry: 'Pakistan',
     },
     sameAs: [
-      PERSONAL_INFO.githubUrl,
-      PERSONAL_INFO.linkedinUrl,
+      personalInfo.githubUrl,
+      personalInfo.linkedinUrl,
     ],
     knowsAbout: [
       'Backend Development',

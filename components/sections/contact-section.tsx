@@ -8,13 +8,13 @@ import { SectionHeader } from "@/components/common/section-header";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { PERSONAL_INFO } from "@/lib/data/portfolio-data";
+import type { PersonalInfo } from "@/lib/data/fetch-portfolio";
 import {
   Send, Download, MapPin, CheckCircle, AlertCircle,
   Loader2, ArrowUpRight, Github, Linkedin, Twitter, Mail,
 } from "lucide-react";
 
-export function ContactSection() {
+export function ContactSection({ personalInfo: PERSONAL_INFO }: { personalInfo: PersonalInfo }) {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",

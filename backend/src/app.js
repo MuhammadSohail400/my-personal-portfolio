@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const healthRoutes = require('./routes/healthRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const contentRoutes = require('./routes/contentRoutes');
+const skillRoutes = require('./routes/skillRoutes');
+const projectRoutes = require('./routes/projectRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -33,6 +36,9 @@ app.use(express.urlencoded({ extended: true }));
 // API Routes
 app.use('/api/health', healthRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/content', contentRoutes);
+app.use('/api/skills', skillRoutes);
+app.use('/api/projects', projectRoutes);
 
 // Root Route
 app.get('/', (req, res) => {

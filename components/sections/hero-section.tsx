@@ -7,10 +7,10 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { ScrollIndicator } from "@/components/common/scroll-indicator";
-import { PERSONAL_INFO } from "@/lib/data/portfolio-data";
+import type { PersonalInfo } from "@/lib/data/fetch-portfolio";
 import { ArrowRight, Terminal, Code, Database, Gauge, Network } from "lucide-react";
 
-export function HeroSection() {
+export function HeroSection({ personalInfo: PERSONAL_INFO }: { personalInfo: PersonalInfo }) {
   return (
     <section id="home" className="relative min-h-[92vh] flex flex-col justify-center pt-20 pb-12 overflow-hidden geometric-grid">
       <Container className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center my-auto">

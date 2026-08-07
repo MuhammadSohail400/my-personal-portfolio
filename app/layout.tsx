@@ -7,6 +7,7 @@ import { AnimatedBackground } from "@/components/common/animated-background";
 import { BackToTop } from "@/components/common/back-to-top";
 import { ThemeProvider } from "@/components/common/theme-provider";
 import { constructMetadata, getPersonJsonLd } from "@/lib/metadata";
+import { getPersonalInfo } from "@/lib/data/fetch-portfolio";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -26,7 +27,10 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = constructMetadata();
+export async function generateMetadata(): Promise<Metadata> {
+  const personalInfo = await getPersonalInfo();
+  return constructMetadata({ personalInfo });
+}
 
 // FOUC-prevention: apply stored theme synchronously before first paint
 const FOUC_SCRIPT = `
@@ -38,12 +42,13 @@ const FOUC_SCRIPT = `
   } catch(e) {}
 `;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = getPersonJsonLd();
+  const personalInfo = await getPersonalInfo();
+  const jsonLd = getPersonJsonLd(personalInfo);
 
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>

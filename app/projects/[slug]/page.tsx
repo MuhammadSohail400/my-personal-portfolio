@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { CASE_STUDIES } from "@/lib/data/portfolio-data";
+import { getCaseStudy, getAllCaseStudySlugs } from "@/lib/data/fetch-portfolio";
 import { CaseStudyContent } from "@/components/sections/case-study-content";
 import { constructMetadata } from "@/lib/metadata";
 
@@ -10,17 +10,19 @@ interface ProjectCaseStudyPageProps {
   }>;
 }
 
+// Always fetch fresh data — case studies can be edited any time via /admin.
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
-  return Object.keys(CASE_STUDIES).map((slug) => ({
-    slug,
-  }));
+  const slugs = await getAllCaseStudySlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: ProjectCaseStudyPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const caseStudy = CASE_STUDIES[slug];
+  const caseStudy = await getCaseStudy(slug);
 
   if (!caseStudy) {
     return constructMetadata({ title: "Project Not Found" });
@@ -37,7 +39,7 @@ export default async function ProjectCaseStudyPage({
   params,
 }: ProjectCaseStudyPageProps) {
   const { slug } = await params;
-  const caseStudy = CASE_STUDIES[slug];
+  const caseStudy = await getCaseStudy(slug);
 
   if (!caseStudy) {
     notFound();

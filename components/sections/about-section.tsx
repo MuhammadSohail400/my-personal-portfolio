@@ -6,10 +6,11 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/layout/container";
 import { SectionHeader } from "@/components/common/section-header";
 import { Card } from "@/components/ui/card";
-import { PERSONAL_INFO, EXPERIENCE_LIST } from "@/lib/data/portfolio-data";
+import { EXPERIENCE_LIST } from "@/lib/data/portfolio-data";
+import type { PersonalInfo } from "@/lib/data/fetch-portfolio";
 import { Target, GraduationCap } from "lucide-react";
 
-export function AboutSection() {
+export function AboutSection({ personalInfo: PERSONAL_INFO }: { personalInfo: PersonalInfo }) {
   return (
     <section id="about" className="py-20 bg-surface">
       <Container>
